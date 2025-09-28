@@ -4,13 +4,16 @@ inputs:
   GITHUB_TOKEN:
     description: "GitHub token to interact with the repository."
     required: true
-  OPENAI_API_KEY:
-    description: "OpenAI API key for GPT."
+  API_KEY:
+    description: "API key for AI Gateway."
     required: true
-  OPENAI_API_MODEL:
-    description: "OpenAI API model."
+  ENDPOINT_URL:
+    description: "Endpoint URL for AI Gateway."
+    required: true
+  MODEL:
+    description: "LLM model."
     required: false
-    default: "gpt-4"
+    default: "@cf/meta/llama-3.1-8b-instruct-fast"
   exclude:
     description: "Glob patterns to exclude files from the diff analysis"
     required: false
