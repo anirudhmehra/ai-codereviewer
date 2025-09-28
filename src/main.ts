@@ -185,7 +185,16 @@ async function createReviewComment(
 }
 
 async function main() {
+  console.log();
+  console.log();
+  console.log();
   const prDetails = await getPRDetails();
+  console.log();
+  console.log();
+  console.log(prDetails);
+  console.log();
+  console.log();
+
   let diff: string | null;
   const eventData = JSON.parse(
     readFileSync(process.env.GITHUB_EVENT_PATH ?? "", "utf8")
