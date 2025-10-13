@@ -1,0 +1,16 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "Running pre-push hook..."
+
+npm run build
+npm run package
+
+git add -A
+
+if ! git diff --cached --quiet; then
+  echo "Changes detected after build/package. Committing..."
+  git commit -m "chore: commit packaged github action"
+else
+  echo "No changes to commit."
+fi

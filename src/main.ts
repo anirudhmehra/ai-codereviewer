@@ -184,15 +184,7 @@ async function createReviewComment(
 }
 
 async function main() {
-  console.log();
-  console.log();
-  console.log();
   const prDetails = await getPRDetails();
-  console.log();
-  console.log();
-  console.log(prDetails);
-  console.log();
-  console.log();
 
   let diff: string | null;
   const eventData = JSON.parse(
@@ -220,8 +212,6 @@ async function main() {
     });
 
     diff = String(response.data);
-
-    console.log(JSON.stringify(response.data, null, 2));
   } else {
     console.log("Unsupported event:", process.env.GITHUB_EVENT_NAME);
     return;
@@ -233,7 +223,6 @@ async function main() {
   }
 
   const parsedDiff = parseDiff(diff);
-  console.log(parsedDiff);
 
   const excludePatterns = core
     .getInput("exclude")
