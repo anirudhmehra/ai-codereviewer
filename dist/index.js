@@ -191,15 +191,7 @@ function createReviewComment(owner, repo, pull_number, comments) {
 function main() {
     var _a;
     return __awaiter(this, void 0, void 0, function* () {
-        console.log();
-        console.log();
-        console.log();
         const prDetails = yield getPRDetails();
-        console.log();
-        console.log();
-        console.log(prDetails);
-        console.log();
-        console.log();
         let diff;
         const eventData = JSON.parse((0, fs_1.readFileSync)((_a = process.env.GITHUB_EVENT_PATH) !== null && _a !== void 0 ? _a : "", "utf8"));
         if (eventData.action === "opened") {
@@ -218,7 +210,6 @@ function main() {
                 head: newHeadSha,
             });
             diff = String(response.data);
-            console.log(JSON.stringify(response.data, null, 2));
         }
         else {
             console.log("Unsupported event:", process.env.GITHUB_EVENT_NAME);
@@ -229,7 +220,6 @@ function main() {
             return;
         }
         const parsedDiff = (0, parse_diff_1.default)(diff);
-        console.log(parsedDiff);
         const excludePatterns = core
             .getInput("exclude")
             .split(",")
