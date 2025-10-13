@@ -10,6 +10,22 @@ const API_KEY: string = core.getInput("API_KEY");
 const API_MODEL: string = core.getInput("MODEL");
 const ENDPOINT_URL: string = core.getInput("ENDPOINT_URL");
 
+if (!GITHUB_TOKEN) {
+  throw new Error("GITHUB_TOKEN not provided");
+} else if (!API_KEY) {
+  throw new Error("API_KEY not provided");
+} else if (!API_MODEL) {
+  throw new Error("API_MODEL not provided");
+} else if (!ENDPOINT_URL) {
+  throw new Error("ENDPOINT_URL not provided");
+}
+
+try {
+  new URL(ENDPOINT_URL);
+} catch {
+  throw new Error("ENDPOINT_URL is invalid");
+}
+
 const octokit = new Octokit({ auth: GITHUB_TOKEN });
 
 const openai = new OpenAI({
