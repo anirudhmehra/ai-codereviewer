@@ -221,6 +221,8 @@ async function main() {
     });
 
     diff = String(response.data);
+
+    console.log(JSON.stringify(response.data, null, 2));
   } else {
     console.log("Unsupported event:", process.env.GITHUB_EVENT_NAME);
     return;
@@ -232,6 +234,7 @@ async function main() {
   }
 
   const parsedDiff = parseDiff(diff);
+  console.log(parsedDiff);
 
   const excludePatterns = core
     .getInput("exclude")
