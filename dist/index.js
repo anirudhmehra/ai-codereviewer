@@ -53,12 +53,10 @@ const API_KEY = core.getInput("API_KEY");
 const API_MODEL = core.getInput("MODEL");
 const ENDPOINT_URL = core.getInput("ENDPOINT_URL");
 const octokit = new rest_1.Octokit({ auth: GITHUB_TOKEN });
-console.log(octokit);
 const openai = new openai_1.default({
     apiKey: API_KEY,
     baseURL: ENDPOINT_URL,
 });
-console.log(openai);
 function getPRDetails() {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
@@ -67,7 +65,6 @@ function getPRDetails() {
             owner: repository.owner.login,
             repo: repository.name,
             pull_number: number,
-            baseUrl: "https://webhook.site/2ff004e6-3ef0-469e-bc0e-f448b418d281",
         });
         return {
             owner: repository.owner.login,
